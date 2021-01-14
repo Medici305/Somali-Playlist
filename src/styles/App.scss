@@ -1,0 +1,20 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: black;
+    color: #fff;
+    font-family: 'Lato';
+}
+
+h1,h2,h3 {
+    color: #fff;
+}
+
+@import './Player';
+@import './Song';
+@import './Library';
+@import './Nav';
