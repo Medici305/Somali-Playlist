@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faPlay,
@@ -6,11 +6,10 @@ import {
     faStepBackward,
     faPause,
 } from "@fortawesome/free-solid-svg-icons";
-import { playAudio } from '../util';
 
 const Player = ({ currentSong, isPlaying, setIsPlaying, audioRef, songInfo, setSongInfo, songs, setSongs, setCurrentSong }) => {
-    // UseEffects
-    useEffect(() => {
+    // Functions
+    const activeLibraryHandler = () => {
         const newSong = songs.map(track => {
             if (track.id === currentSong.id) {
                 return {
@@ -25,8 +24,7 @@ const Player = ({ currentSong, isPlaying, setIsPlaying, audioRef, songInfo, setS
             }
         })
         setSongs(newSong);
-    }, [currentSong])
-    // Functions
+    }
     const playSongHandler = () => {
         if (isPlaying) {
             audioRef.current.pause();
@@ -45,20 +43,23 @@ const Player = ({ currentSong, isPlaying, setIsPlaying, audioRef, songInfo, setS
         audioRef.current.currentTime = e.target.value;
         setSongInfo({ ...songInfo, currentTime: e.target.value });
     };
-    const skipSongHandler = (directon) => {
+    const skipSongHandler = async (directon) => {
         const currentIndex = songs.findIndex(song => song.id === currentSong.id);
         if (directon === 'forward') {
-            setCurrentSong(songs[(currentIndex + 1) % songs.length]);
+            await setCurrentSong(songs[(currentIndex + 1) % songs.length]);
+            activeLibraryHandler(songs[(currentIndex + 1) % songs.length]);
         }
         if (directon === 'backward') {
             if ((currentIndex - 1) % songs.length === -1) {
-                setCurrentSong(songs[songs.length - 1]);
-                playAudio(isPlaying, audioRef);
+                await setCurrentSong(songs[songs.length - 1]);
+                activeLibraryHandler(songs[songs.length - 1]);
+                if (isPlaying) audioRef.current.play();
                 return;
             }
-            setCurrentSong(songs[(currentIndex - 1) % songs.length]);
+            await setCurrentSong(songs[(currentIndex - 1) % songs.length]);
+            activeLibraryHandler(songs[(currentIndex - 1) % songs.length]);
         }
-        playAudio(isPlaying, audioRef);
+        if (isPlaying) audioRef.current.play();
     }
     const trackAnim = {
         transform: `translateX(${songInfo.animatePercentage}%)`
