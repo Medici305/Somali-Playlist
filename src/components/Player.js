@@ -9,9 +9,9 @@ import {
 
 const Player = ({ currentSong, isPlaying, setIsPlaying, audioRef, songInfo, setSongInfo, songs, setSongs, setCurrentSong }) => {
     // Functions
-    const activeLibraryHandler = () => {
+    const activeLibraryHandler = (nextPrev) => {
         const newSong = songs.map(track => {
-            if (track.id === currentSong.id) {
+            if (track.id === nextPrev.id) {
                 return {
                     ...track,
                     active: true
