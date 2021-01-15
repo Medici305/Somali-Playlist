@@ -95,6 +95,15 @@ function somaliPlaylist() {
             id: uuidv4(),
             active: false,
         },
+        {
+            name: 'Qaboojiye',
+            cover: 'https://static.vibe.com/files/2017/09/russ-wife-you-up-single-1505836120-compressed.jpg',
+            artist: 'Abdi Jamac Qaboojiye',
+            audio: 'https://somali-music.com/uploads/tracks/103.mp3',
+            color: ["#ED96A9", "#FFFFFF"],
+            id: uuidv4(),
+            active: false,
+        },
     ];
 }
 

@@ -14,6 +14,14 @@ h1,h2,h3 {
     color: #fff;
 }
 
+.App {
+    transition: all .5s ease-in-out;
+}
+
+.library-active {
+    margin-left: 20%;
+}
+
 @import './Player';
 @import './Song';
 @import './Library';
